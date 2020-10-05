@@ -15,15 +15,6 @@ function emailCheck() {
 }
 
 function validation() {
-    /*
-            if ($("#username, #first_name, #last_name, #phone, #password, #cpassword").val() === "") {
-                $("#username, #first_name, #last_name, #phone, #password, #cpassword").addClass("is-invalid");
-                return false;
-            } else {
-                $("#username, #first_name, #last_name, #phone, #password, #cpassword").removeClass("is-invalid");
-            }
-    */
-
     let p = document.getElementById('cp');
     if ($("#password").val() !== $("#cpassword").val()) {
         p.style.visibility = "visible";
