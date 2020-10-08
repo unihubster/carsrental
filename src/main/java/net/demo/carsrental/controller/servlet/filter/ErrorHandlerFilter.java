@@ -1,6 +1,6 @@
-package net.demo.carsrental.servlet.filter;
+package net.demo.carsrental.controller.servlet.filter;
 
-import net.demo.carsrental.servlet.ViewNames;
+import net.demo.carsrental.controller.servlet.ViewConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,7 +26,7 @@ public class ErrorHandlerFilter implements Filter {
         } catch (Throwable th) {
             String requestUrl = req.getRequestURI();
             LOGGER.error("Request {} failed: {}", requestUrl, th.getMessage(), th);
-            req.getRequestDispatcher(ViewNames.ERROR_PAGE).forward(request, response);
+            req.getRequestDispatcher(ViewConstants.ERROR_PAGE).forward(request, response);
         }
     }
 

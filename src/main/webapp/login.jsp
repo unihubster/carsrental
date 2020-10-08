@@ -15,7 +15,7 @@
                     <div class="col-sm-12">
                         <form action="${pageContext.request.contextPath}/command" method="post" id="singninForm" onSubmit="return validation();"
                               class="needs-validation" novalidate>
-                            <input type="hidden" name="command" value="login">
+                            <input type="hidden" name="action" value="sign_in">
                             <div class="form-group">
                                 <label class="font-weight-bold"><fmt:message key="registration.label.username"/></label>
                                 <input type="text" name="username" id="username" class="form-control" pattern="[A-Za-z]{1,100}" required
