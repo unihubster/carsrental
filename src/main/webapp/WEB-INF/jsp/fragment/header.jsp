@@ -14,7 +14,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="${pageContext.request.contextPath}"><fmt:message key="nav.home"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/command?action=default"><fmt:message key="nav.home"/></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}"><fmt:message key="nav.cars.list"/></a>

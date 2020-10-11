@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashSet;
 
-@WebServlet({ViewConstants.COMMAND_SERVLET_PATH, ViewConstants.COMMAND_SERVLET_PATH + "/*"})
+@WebServlet({ViewConstants.COMMAND_SERVLET_PATH})
 public class ServletCommand extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(ServletCommand.class);
 

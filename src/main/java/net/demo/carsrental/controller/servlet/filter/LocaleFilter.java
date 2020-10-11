@@ -11,11 +11,6 @@ import java.io.IOException;
 public class LocaleFilter implements Filter {
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        //
-    }
-
-    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest req = (HttpServletRequest) request;
         if (req.getParameter(ViewConstants.LANGUAGE_PARAM) != null) {
@@ -25,10 +20,5 @@ public class LocaleFilter implements Filter {
             req.getSession().setAttribute(ViewConstants.LANGUAGE_PARAM, ViewConstants.DEFAULT_LANG);
         }
         chain.doFilter(request, response);
-    }
-
-    @Override
-    public void destroy() {
-        //
     }
 }

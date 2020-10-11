@@ -10,11 +10,6 @@ import java.io.IOException;
 public class CharacterEncodingFilter implements Filter {
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        //
-    }
-
-    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
@@ -22,10 +17,4 @@ public class CharacterEncodingFilter implements Filter {
         resp.setCharacterEncoding("UTF-8");
         chain.doFilter(req, resp);
     }
-
-    @Override
-    public void destroy() {
-        //
-    }
-
 }

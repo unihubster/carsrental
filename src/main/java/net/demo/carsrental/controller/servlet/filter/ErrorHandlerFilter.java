@@ -14,11 +14,6 @@ public class ErrorHandlerFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger(ErrorHandlerFilter.class);
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        //
-    }
-
-    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest req = (HttpServletRequest) request;
         try {
@@ -28,10 +23,5 @@ public class ErrorHandlerFilter implements Filter {
             LOGGER.error("Request {} failed: {}", requestUrl, th.getMessage(), th);
             req.getRequestDispatcher(ViewConstants.ERROR_PAGE).forward(request, response);
         }
-    }
-
-    @Override
-    public void destroy() {
-        //
     }
 }

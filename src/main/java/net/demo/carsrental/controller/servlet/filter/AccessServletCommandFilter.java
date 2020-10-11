@@ -13,14 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter("/*")
-public class AccessFilter implements Filter {
-    private static final Logger LOGGER = LogManager.getLogger(AccessFilter.class);
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        //
-    }
+/**
+ * Filter for Command servlet actions
+ */
+@WebFilter(ViewConstants.COMMAND_SERVLET_PATH)
+public class AccessServletCommandFilter implements Filter {
+    private static final Logger LOGGER = LogManager.getLogger(AccessServletCommandFilter.class);
 
     /**
      * Does filter for access to CommandServlet commands
@@ -29,13 +27,14 @@ public class AccessFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+
         HttpSession session = httpServletRequest.getSession();
         String path = httpServletRequest.getRequestURL().toString();
 
         Account.Role roleFromSession = getRoleFromSession(session);
         String commandName = httpServletRequest.getParameter(ViewConstants.ACTION_PARAM);
 
-        if (isCommandServletCall(path) && !allowedCommandAccess(commandName, roleFromSession)) {
+        if (!allowedCommandAccess(commandName, roleFromSession)) {
             LOGGER.info("Access denied for path '{}' and command '{}' for role '{}' for username '{}'",
                     path, commandName, roleFromSession, session.getAttribute(ViewConstants.USER_NAME));
             httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + ViewConstants.ACCESS_DENIED_PAGE);
@@ -43,11 +42,6 @@ public class AccessFilter implements Filter {
         }
 
         filterChain.doFilter(httpServletRequest, httpServletResponse);
-    }
-
-    @Override
-    public void destroy() {
-        //
     }
 
     private Account.Role getRoleFromSession(HttpSession session) {
@@ -58,9 +52,5 @@ public class AccessFilter implements Filter {
         return CommandManager.getInstance()
                              .getCommandNameSet(role)
                              .contains(commandName);
-    }
-
-    private boolean isCommandServletCall(String path) {
-        return path.contains(ViewConstants.COMMAND_SERVLET_PATH);
     }
 }
