@@ -34,7 +34,7 @@ public class AccessServletCommandFilter implements Filter {
         Account.Role roleFromSession = getRoleFromSession(session);
         String commandName = httpServletRequest.getParameter(ViewConstants.ACTION_PARAM);
 
-        if (!allowedCommandAccess(commandName, roleFromSession)) {
+        if (!isAllowedCommandAccess(commandName, roleFromSession)) {
             LOGGER.info("Access denied for path '{}' and command '{}' for role '{}' for username '{}'",
                     path, commandName, roleFromSession, session.getAttribute(ViewConstants.USER_NAME));
             httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + ViewConstants.ACCESS_DENIED_PAGE);
@@ -48,7 +48,7 @@ public class AccessServletCommandFilter implements Filter {
         return (Account.Role) session.getAttribute(ViewConstants.ROLE);
     }
 
-    private boolean allowedCommandAccess(String commandName, Account.Role role) {
+    private boolean isAllowedCommandAccess(String commandName, Account.Role role) {
         return CommandManager.getInstance()
                              .getCommandNameSet(role)
                              .contains(commandName);

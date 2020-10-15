@@ -21,6 +21,19 @@ public class ViewConstants {
     public static final String SIGN_IN_PAGE = "/login.jsp";
     public static final String ACCESS_DENIED_PAGE = "/access-error.jsp";
 
+    public static final String REGISTRATION_ERROR_PARAM = "registrationError";
+    public static final String REGISTRATION_ERROR_PARAM_USER_EXIST = "userExist";
+    // Registration form fields
+    public static final String REGISTRATION_USERNAME = "username";
+    public static final String REGISTRATION_PASSWORD = "password";
+    public static final String REGISTRATION_FIRSTNAME = "first_name";
+    public static final String REGISTRATION_LASTNAME = "last_name";
+    public static final String REGISTRATION_EMAIL = "email";
+    public static final String REGISTRATION_PHONE = "phone";
+    // SignIn form fields
+    public static final String SIGN_IN_USERNAME = "username";
+    public static final String SIGN_IN_PASSWORD = "password";
+
     private ViewConstants() {
     }
 }

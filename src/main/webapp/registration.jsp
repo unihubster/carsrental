@@ -17,6 +17,12 @@
                         <form method="post" action="${pageContext.request.contextPath}/command" id="singnupForm" onSubmit="return validation();"
                               class="needs-validation" novalidate>
                             <input type="hidden" name="action" value="register">
+                            <c:if test="${not empty sessionScope.registrationError}">
+                                <small class="text-danger"><em><fmt:message key="registration.message.error.validation"/></em></small>
+                            </c:if>
+                            <c:if test="${not empty sessionScope.userExist}">
+                                <small class="text-danger"><em><fmt:message key="registration.message.error.userExist"/></em></small>
+                            </c:if>
                             <div class="form-group">
                                 <label class="font-weight-bold">Email</label>
                                 <div class="input-group">
@@ -59,12 +65,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="font-weight-bold"><fmt:message key="registration.label.password"/></label>
-                                    <input type="password" name="password" id="password" class="form-control" pattern="[A-Za-z0-9]{3,}" required
+                                    <input type="password" name="password" id="password" class="form-control" pattern="[A-Za-z0-9]{3,32}" required
                                            placeholder="********">
                                 </div>
                                 <div class="form-group">
                                     <label class="font-weight-bold"><fmt:message key="registration.label.cpassword"/></label>
-                                    <input type="password" name="cpassword" id="cpassword" class="form-control" pattern="[A-Za-z0-9]{3,}" required
+                                    <input type="password" name="cpassword" id="cpassword" class="form-control" pattern="[A-Za-z0-9]{3,32}" required
                                            placeholder="********">
                                     <em id="cp" class="text-danger" style="visibility: hidden;"><fmt:message key="registration.message.cpassword"/></em>
                                 </div>

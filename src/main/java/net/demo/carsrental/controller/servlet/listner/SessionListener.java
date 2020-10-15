@@ -1,12 +1,13 @@
 package net.demo.carsrental.controller.servlet.listner;
 
 import net.demo.carsrental.controller.servlet.ViewConstants;
+import net.demo.carsrental.controller.util.ContextUsersHandler;
 import net.demo.carsrental.model.Account;
 
 import javax.servlet.annotation.WebListener;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-import java.util.HashSet;
 
 @WebListener
 public class SessionListener implements HttpSessionListener {
@@ -18,12 +19,8 @@ public class SessionListener implements HttpSessionListener {
 
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
-        HashSet<String> loggedUsers = (HashSet<String>) httpSessionEvent.getSession()
-                                                                        .getServletContext()
-                                                                        .getAttribute("loggedUsers");
-        String userName = (String) httpSessionEvent.getSession()
-                                                   .getAttribute(ViewConstants.USER_NAME);
-        loggedUsers.remove(userName);
-        httpSessionEvent.getSession().setAttribute(ViewConstants.LOGGED_USERS, loggedUsers);
+        HttpSession session = httpSessionEvent.getSession();
+        String userName = (String) session.getAttribute(ViewConstants.USER_NAME);
+        ContextUsersHandler.removeFromLoggedUsers(session.getServletContext(), userName);
     }
 }

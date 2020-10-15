@@ -3,6 +3,7 @@ package net.demo.carsrental.controller.servlet;
 import net.demo.carsrental.controller.command.Command;
 import net.demo.carsrental.controller.command.CommandConstants;
 import net.demo.carsrental.controller.command.CommandManager;
+import net.demo.carsrental.controller.util.ContextUsersHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashSet;
 
 @WebServlet({ViewConstants.COMMAND_SERVLET_PATH})
 public class ServletCommand extends HttpServlet {
@@ -22,7 +22,7 @@ public class ServletCommand extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        config.getServletContext().setAttribute(ViewConstants.LOGGED_USERS, new HashSet<String>());
+        ContextUsersHandler.initLoggedUsers(config.getServletContext());
     }
 
     @Override

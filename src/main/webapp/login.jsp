@@ -16,6 +16,9 @@
                         <form action="${pageContext.request.contextPath}/command" method="post" id="singninForm" onSubmit="return validation();"
                               class="needs-validation" novalidate>
                             <input type="hidden" name="action" value="sign_in">
+                            <c:if test="${not empty sessionScope.registrationError}">
+                                <small class="text-danger"><em><fmt:message key="registration.message.error.validation"/></em></small>
+                            </c:if>
                             <div class="form-group">
                                 <label class="font-weight-bold"><fmt:message key="registration.label.username"/></label>
                                 <input type="text" name="username" id="username" class="form-control" pattern="[A-Za-z]{1,100}" required
