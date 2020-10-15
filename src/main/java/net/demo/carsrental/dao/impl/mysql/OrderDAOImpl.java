@@ -36,11 +36,12 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public void update(Order order) {
+    public Order update(Order order) {
+        return order;
     }
 
     @Override
-    public void delete(Long id) {
-
+    public boolean delete(Long id) {
+        return false;
     }
 }

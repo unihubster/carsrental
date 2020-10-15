@@ -36,11 +36,12 @@ public class BillDAOImpl implements BillDAO {
     }
 
     @Override
-    public void update(Bill bill) {
+    public Bill update(Bill bill) {
+        return bill;
     }
 
     @Override
-    public void delete(Long id) {
-
+    public boolean delete(Long id) {
+        return false;
     }
 }

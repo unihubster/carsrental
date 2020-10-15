@@ -13,7 +13,7 @@ public interface GenericDAO<T> {
 
     List<T> findPage(Page page);
 
-    void update(T entity);
+    T update(T entity);
 
-    void delete(Long id);
+    boolean delete(Long id);
 }

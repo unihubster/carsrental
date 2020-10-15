@@ -36,11 +36,12 @@ public class CarDAOImpl implements CarDAO {
     }
 
     @Override
-    public void update(Car car) {
+    public Car update(Car car) {
+        return car;
     }
 
     @Override
-    public void delete(Long id) {
-
+    public boolean delete(Long id) {
+        return false;
     }
 }

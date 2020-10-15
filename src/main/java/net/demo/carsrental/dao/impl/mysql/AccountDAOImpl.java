@@ -145,7 +145,7 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public Optional<Account> getAccountByUsername(String username) {
+    public Optional<Account> findByUsername(String username) {
         Optional<Account> optional = Optional.empty();
         try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(GET_ONE_BY_USERNAME)) {
             statement.setString(1, username);
@@ -180,28 +180,28 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public void update(Account account) {
+    public Account update(Account account) {
         Long accountId = account.getId();
-        String accountEmail = account.getEmail();
+        String accountUsername = account.getUsername();
         if (accountId != null && accountId > 0) {
             try (Connection connection = connectionFactory.getConnection()) {
-                updateById(account, connection);
+                account = updateById(account, connection);
             } catch (SQLException e) {
                 LOGGER.warn("{} wasn't updated", account);
                 throw new DAOException(e);
             }
-        }
-        if (accountEmail != null && !accountEmail.isEmpty()) {
+        } else if (accountUsername != null && !accountUsername.isEmpty()) {
             try (Connection connection = connectionFactory.getConnection()) {
-                updateByUsername(account, connection);
+                account = updateByUsername(account, connection);
             } catch (SQLException e) {
                 LOGGER.warn("{} wasn't updated", account);
                 throw new DAOException(e);
             }
         }
+        return account;
     }
 
-    private void updateById(Account account, Connection connection) throws SQLException {
+    private Account updateById(Account account, Connection connection) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
         try (PreparedStatement statement = connection.prepareStatement(UPDATE_BY_ID)) {
@@ -209,15 +209,17 @@ public class AccountDAOImpl implements AccountDAO {
             statement.setLong(9, account.getId());
             statement.execute();
             connection.commit();
+            account = findById(account.getId()).orElseThrow(SQLException::new);
         } catch (SQLException ex) {
             connection.rollback();
             throw ex;
         } finally {
             connection.setAutoCommit(autoCommit);
         }
+        return account;
     }
 
-    private void updateByUsername(Account account, Connection connection) throws SQLException {
+    private Account updateByUsername(Account account, Connection connection) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
         try (PreparedStatement statement = connection.prepareStatement(UPDATE_BY_USERNAME)) {
@@ -225,19 +227,21 @@ public class AccountDAOImpl implements AccountDAO {
             statement.setString(9, account.getUsername());
             statement.execute();
             connection.commit();
+            account = findByUsername(account.getUsername()).orElseThrow(SQLException::new);
         } catch (SQLException ex) {
             connection.rollback();
             throw ex;
         } finally {
             connection.setAutoCommit(autoCommit);
         }
+        return account;
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
         try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(DELETE)) {
             statement.setLong(1, id);
-            statement.execute();
+            return statement.execute();
         } catch (SQLException e) {
             LOGGER.info("Account with id {} wasn't deleted", id, e);
             throw new DAOException(e);
