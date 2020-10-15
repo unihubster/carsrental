@@ -16,7 +16,7 @@ import java.io.IOException;
 /**
  * Filter for Command servlet actions
  */
-@WebFilter(ViewConstants.COMMAND_SERVLET_PATH)
+@WebFilter(filterName = "AccessServletCommandFilter", urlPatterns = ViewConstants.COMMAND_SERVLET_PATH)
 public class AccessServletCommandFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger(AccessServletCommandFilter.class);
 

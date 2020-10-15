@@ -22,6 +22,7 @@
                             </c:if>
                             <c:if test="${not empty sessionScope.userExist}">
                                 <small class="text-danger"><em><fmt:message key="registration.message.error.userExist"/></em></small>
+                                ${sessionScope.remove("userExist")}
                             </c:if>
                             <div class="form-group">
                                 <label class="font-weight-bold">Email</label>

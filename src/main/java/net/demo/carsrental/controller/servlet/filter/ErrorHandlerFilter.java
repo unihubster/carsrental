@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter("/*")
+@WebFilter(filterName = "ErrorHandlerFilter", urlPatterns = "/*")
 public class ErrorHandlerFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger(ErrorHandlerFilter.class);
 
