@@ -29,7 +29,7 @@ public class AccountService implements Service {
 
     // https://github.com/wg/scrypt
     public Account getAccountIfKnown(AccountSignInDTO accountSignInDTO) {
-        Account account = accountDAO.getAccountByUsername(accountSignInDTO.getUsername())
+        Account account = accountDAO.findByUsername(accountSignInDTO.getUsername())
                                     .orElseThrow(() -> new AccountNotFoundException(accountSignInDTO));
         if (!SCryptUtil.check(accountSignInDTO.getPassword(), account.getPassword())) {
             throw new AccountNotFoundException(accountSignInDTO);

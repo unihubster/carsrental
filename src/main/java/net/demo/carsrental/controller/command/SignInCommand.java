@@ -39,8 +39,7 @@ public class SignInCommand implements Command {
         session.setAttribute(ViewConstants.ROLE, accountKnown.getRole());
         session.setAttribute(ViewConstants.USER_NAME, accountSignInDTO.getUsername());
 
-        return CommandConstants.REDIRECT_COMMAND
-                + ViewConstants.COMMAND_SERVLET_PATH
+        return ViewConstants.COMMAND_SERVLET_PATH
                 + ViewConstants.ACTION_PARAM_GET
                 + CommandConstants.DEFAULT_COMMAND;
     }
