@@ -105,15 +105,8 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public Account create(Account account) throws NotUniqueException {
-        try (PreparedStatement statement = connectionFactory.getConnection()
-                                                            .prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
-            mapAccountToPreparedStatement(statement, account);
-            statement.executeUpdate();
-            try (ResultSet resultSet = statement.getGeneratedKeys()) {
-                if (resultSet.next()) {
-                    account.setId(resultSet.getLong(1));
-                }
-            }
+        try (Connection connection = connectionFactory.getConnection()) {
+            account = create(account, connection);
         } catch (SQLIntegrityConstraintViolationException e) {
             LOGGER.info("Account {} is not unique", account, e);
             List<String> list = new ArrayList<>(2);
@@ -123,6 +116,23 @@ public class AccountDAOImpl implements AccountDAO {
         } catch (SQLException e) {
             LOGGER.error("Account {} wasn't created", account, e);
             throw new DAOException(e);
+        }
+        return account;
+    }
+
+    private Account create(Account account, Connection connection) throws SQLException {
+        boolean autoCommit = connection.getAutoCommit();
+        connection.setAutoCommit(false);
+        try (PreparedStatement statement = connection.prepareStatement(INSERT)) {
+            mapAccountToPreparedStatement(statement, account);
+            statement.executeUpdate();
+            connection.commit();
+            account = findById(account.getId()).orElseThrow(SQLException::new);
+        } catch (SQLException ex) {
+            connection.rollback();
+            throw ex;
+        } finally {
+            connection.setAutoCommit(autoCommit);
         }
         return account;
     }
