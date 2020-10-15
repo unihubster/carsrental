@@ -61,12 +61,9 @@
             <c:if test="${empty sessionScope.username}">
                 <a class="btn btn-primary px-4" href="${pageContext.request.contextPath}/login.jsp"><fmt:message key="nav.login"/></a>
             </c:if>
-            <c:if test="1==3">
-                <p>1</p>
-            </c:if>
             <c:if test="${not empty sessionScope.username}">
                 <form class="form-inline" method="post" action="${pageContext.request.contextPath}/command">
-                    <input type="hidden" name="action" value="logout">
+                    <input type="hidden" name="action" value="sign_out">
                     <input type="submit" name="submit" class="btn btn-primary px-4" value="<fmt:message key="nav.logout"/>">
                 </form>
             </c:if>

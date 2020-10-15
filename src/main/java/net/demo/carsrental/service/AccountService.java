@@ -2,6 +2,7 @@ package net.demo.carsrental.service;
 
 import com.lambdaworks.crypto.SCryptUtil;
 import net.demo.carsrental.dao.AccountDAO;
+import net.demo.carsrental.dao.exception.AccountNotFoundException;
 import net.demo.carsrental.dao.exception.NotUniqueException;
 import net.demo.carsrental.dto.AccountRegistrationDTO;
 import net.demo.carsrental.dto.AccountSignInDTO;
@@ -27,9 +28,13 @@ public class AccountService implements Service {
     }
 
     // https://github.com/wg/scrypt
-    public boolean isLoginAndPasswordKnown(AccountSignInDTO accountSignInDTO) {
-        String cryptPassword = accountDAO.getPassword(accountSignInDTO.getUsername());
-        return SCryptUtil.check(accountSignInDTO.getPassword(), cryptPassword);
+    public Account getAccountIfKnown(AccountSignInDTO accountSignInDTO) {
+        Account account = accountDAO.getAccountByUsername(accountSignInDTO.getUsername())
+                                    .orElseThrow(() -> new AccountNotFoundException(accountSignInDTO));
+        if (!SCryptUtil.check(accountSignInDTO.getPassword(), account.getPassword())) {
+            throw new AccountNotFoundException(accountSignInDTO);
+        }
+        return account;
     }
 
     private Account mapAccountDTOtoAccount(AccountRegistrationDTO accountRegistrationDTO) {

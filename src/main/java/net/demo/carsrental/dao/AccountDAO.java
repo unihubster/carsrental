@@ -2,6 +2,8 @@ package net.demo.carsrental.dao;
 
 import net.demo.carsrental.model.Account;
 
+import java.util.Optional;
+
 public interface AccountDAO extends GenericDAO<Account> {
-    String getPassword(String username);
+    Optional<Account> getAccountByUsername(String username);
 }

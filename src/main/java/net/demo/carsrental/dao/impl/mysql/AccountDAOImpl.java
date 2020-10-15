@@ -32,7 +32,7 @@ public class AccountDAOImpl implements AccountDAO {
             + AccountTable.ACCOUNT_ROLE_ID + ", "
             + AccountTable.ACCOUNT_STATUS + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private static final String GET_ONE = "SELECT "
+    private static final String GET_ONE_BY_ID = "SELECT "
             + AccountTable.ACCOUNT_ID + ", "
             + AccountTable.USERNAME + ", "
             + AccountTable.PASSWORD + ", "
@@ -46,7 +46,18 @@ public class AccountDAOImpl implements AccountDAO {
             + AccountTable.LAST_UPDATE_DATE
             + " FROM " + Tables.ACCOUNT_TABLE_NAME + " WHERE " + AccountTable.ACCOUNT_ID + "=?";
 
-    private static final String GET_PASSWORD = "SELECT " + AccountTable.PASSWORD
+    private static final String GET_ONE_BY_USERNAME = "SELECT "
+            + AccountTable.ACCOUNT_ID + ", "
+            + AccountTable.USERNAME + ", "
+            + AccountTable.PASSWORD + ", "
+            + AccountTable.FIRST_NAME + ", "
+            + AccountTable.LAST_NAME + ", "
+            + AccountTable.EMAIL + ", "
+            + AccountTable.PHONE + ", "
+            + AccountTable.ACCOUNT_ROLE_ID + ", "
+            + AccountTable.ACCOUNT_STATUS + ", "
+            + AccountTable.CREATE_DATE + ", "
+            + AccountTable.LAST_UPDATE_DATE
             + " FROM " + Tables.ACCOUNT_TABLE_NAME + " WHERE " + AccountTable.USERNAME + "=?";
 
     private static final String GET_PAGE = "SELECT ("
@@ -119,7 +130,7 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public Optional<Account> findById(Long id) {
         Optional<Account> optional = Optional.empty();
-        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(GET_ONE)) {
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(GET_ONE_BY_ID)) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -134,20 +145,20 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public String getPassword(String username) {
-        String password = "";
-        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(GET_PASSWORD)) {
+    public Optional<Account> getAccountByUsername(String username) {
+        Optional<Account> optional = Optional.empty();
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(GET_ONE_BY_USERNAME)) {
             statement.setString(1, username);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    password = resultSet.getString(AccountTable.PASSWORD);
+                    optional = Optional.of(mapResultSetToAccount(resultSet));
                 }
             }
         } catch (SQLException e) {
             LOGGER.error("Account with username {} wasn't obtained", username, e);
             throw new DAOException(e);
         }
-        return password;
+        return optional;
     }
 
     @Override
