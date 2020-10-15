@@ -127,7 +127,7 @@ public class AccountDAOImpl implements AccountDAO {
             mapAccountToPreparedStatement(statement, account);
             statement.executeUpdate();
             connection.commit();
-            account = findById(account.getId()).orElseThrow(SQLException::new);
+            account = findByUsername(account.getUsername()).orElseThrow(SQLException::new);
         } catch (SQLException ex) {
             connection.rollback();
             throw ex;
