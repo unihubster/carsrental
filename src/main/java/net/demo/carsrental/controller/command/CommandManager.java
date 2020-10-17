@@ -2,6 +2,7 @@ package net.demo.carsrental.controller.command;
 
 import net.demo.carsrental.controller.servlet.ViewConstants;
 import net.demo.carsrental.model.Account;
+import net.demo.carsrental.service.ServiceHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,8 +16,8 @@ public class CommandManager {
     private static final Logger LOGGER = LogManager.getLogger(CommandManager.class);
 
     private static final CommandManager instance = new CommandManager();
-    private final Map<String, Command> commandsMap = new HashMap<>();
 
+    private final Map<String, Command> commandsMap = new HashMap<>();
     private final Set<String> guestCommandsNamesSet = new HashSet<>();
     private final Set<String> customerCommandsNamesSet = new HashSet<>();
     private final Set<String> managerCommandsNamesSet = new HashSet<>();
@@ -47,8 +48,28 @@ public class CommandManager {
         registerCommand(Account.Role.MANAGER, CommandConstants.DEFAULT_COMMAND, defaultCommand);
         registerCommand(Account.Role.ADMIN, CommandConstants.DEFAULT_COMMAND, defaultCommand);
 
-        registerCommand(Account.Role.GUEST, CommandConstants.SIGN_IN_COMMAND, new SignInCommand());
-        registerCommand(Account.Role.GUEST, CommandConstants.REGISTRATION_COMMAND, new RegistrationCommand());
+        registerCommand(Account.Role.GUEST, CommandConstants.SIGN_IN_COMMAND,
+                new SignInCommand(ServiceHandler.getAccountService()));
+        registerCommand(Account.Role.GUEST, CommandConstants.REGISTRATION_COMMAND,
+                new RegistrationCommand(ServiceHandler.getAccountService()));
+
+        registerCommand(Account.Role.ADMIN, CommandConstants.DEFAULT_ADMIN_PAGE_COMMAND, new AdminMainPageCommand());
+
+        ManagerMainPageCommand managerMainPageCommand = new ManagerMainPageCommand();
+        registerCommand(Account.Role.ADMIN, CommandConstants.DEFAULT_MANAGER_PAGE_COMMAND, managerMainPageCommand);
+        registerCommand(Account.Role.MANAGER, CommandConstants.DEFAULT_MANAGER_PAGE_COMMAND, managerMainPageCommand);
+
+        CustomerMainPageCommand customerMainPageCommand = new CustomerMainPageCommand();
+        registerCommand(Account.Role.GUEST, CommandConstants.DEFAULT_CUSTOMER_PAGE_COMMAND, customerMainPageCommand);
+        registerCommand(Account.Role.CUSTOMER, CommandConstants.DEFAULT_CUSTOMER_PAGE_COMMAND, customerMainPageCommand);
+        registerCommand(Account.Role.MANAGER, CommandConstants.DEFAULT_CUSTOMER_PAGE_COMMAND, customerMainPageCommand);
+        registerCommand(Account.Role.ADMIN, CommandConstants.DEFAULT_CUSTOMER_PAGE_COMMAND, customerMainPageCommand);
+
+        RentalCarsListCommand rentalCarsListCommand = new RentalCarsListCommand(ServiceHandler.getCarService());
+        registerCommand(Account.Role.GUEST, CommandConstants.RENTAL_CARS_LIST, rentalCarsListCommand);
+        registerCommand(Account.Role.CUSTOMER, CommandConstants.RENTAL_CARS_LIST, rentalCarsListCommand);
+        registerCommand(Account.Role.MANAGER, CommandConstants.RENTAL_CARS_LIST, rentalCarsListCommand);
+        registerCommand(Account.Role.ADMIN, CommandConstants.RENTAL_CARS_LIST, rentalCarsListCommand);
 
         SignOutCommand signOutCommand = new SignOutCommand();
         registerCommand(Account.Role.CUSTOMER, CommandConstants.SIGN_OUT_COMMAND, signOutCommand);

@@ -56,4 +56,11 @@ public class AccountSignInDTO {
             return new AccountSignInDTO(this);
         }
     }
+
+    @Override
+    public String toString() {
+        return "AccountSignInDTO{" +
+                "username='" + username + '\'' +
+                '}';
+    }
 }

@@ -36,7 +36,7 @@ public class ServletCommand extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOGGER.info("Request {}", req.getRequestURI());
+        LOGGER.trace("Request {}", req.getRequestURI());
         Command command = CommandManager.getInstance().getCommand(req);
         String page = command.execute(req);
         if (page.contains(CommandConstants.REDIRECT_COMMAND)) {

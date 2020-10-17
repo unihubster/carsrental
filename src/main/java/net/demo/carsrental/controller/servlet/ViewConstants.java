@@ -14,12 +14,12 @@ public class ViewConstants {
 
     public static final String ERROR_PAGE = "error.jsp";
     public static final String DEFAULT_PAGE = "/index.jsp";
-    public static final String DEFAULT_ADMIN_PAGE = "/WEB-INF/jsp/page/admin/admin-home.jsp";
-    public static final String DEFAULT_MANAGER_PAGE = "/WEB-INF/jsp/page/manager/manager-home.jsp";
-    public static final String DEFAULT_CUSTOMER_PAGE = "/WEB-INF/jsp/page/customer/cars-list.jsp";
+    public static final String ADMIN_MAIN_PAGE = "/WEB-INF/jsp/page/admin/users.jsp";
+    public static final String MANAGER_MAIN_PAGE = "/WEB-INF/jsp/page/manager/orders.jsp";
+    public static final String CARS_LIST_PAGE = "/cars-list.jsp";
     public static final String REGISTRATION_PAGE = "/registration.jsp";
     public static final String SIGN_IN_PAGE = "/login.jsp";
-    public static final String ACCESS_DENIED_PAGE = "/access-error.jsp";
+    public static final String ACCESS_DENIED_PAGE = "/error403.jsp";
 
     public static final String REGISTRATION_ERROR_PARAM = "registrationError";
     public static final String REGISTRATION_ERROR_PARAM_USER_EXIST = "userExist";

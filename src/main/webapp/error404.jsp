@@ -13,7 +13,7 @@
             <div class="col-lg-3"></div>
             <div class="col-lg-6">
                 <h2><fmt:message key="error.message.404"/></h2>
-                <p><fmt:message key="error.message.request_uri"/> ${requestScope['javax.servlet.forward.request_uri']}</p>
+                <p><fmt:message key="error.message.request_uri"/>&nbsp;${requestScope['javax.servlet.forward.request_uri']}</p>
             </div>
             <div class="col-lg-3"></div>
         </div>

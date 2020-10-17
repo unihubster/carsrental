@@ -3,7 +3,7 @@ package net.demo.carsrental.dao;
 import net.demo.carsrental.dao.impl.mysql.MySQLDAOFactory;
 
 public abstract class DAOFactory {
-    protected ConnectionFactory connectionFactory = new ConnectionFactory();
+    protected final ConnectionFactory connectionFactory = new ConnectionFactory();
 
     /**
      * Returns concrete DAOFactory

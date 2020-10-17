@@ -17,7 +17,7 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/command?action=default"><fmt:message key="nav.home"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}"><fmt:message key="nav.cars.list"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/cars-list.jsp"><fmt:message key="nav.cars.list"/></a>
                 </li>
             </ul>
             <c:if test="${not empty sessionScope.username}">

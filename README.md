@@ -11,7 +11,7 @@ An unregistered client cannot make an order. In the order data a client indicate
 option 'with a driver'/'without a driver', rental period. The system creates an Invoice, which is paid by a client.
 
 A manager treats the order and can deny it, indicating the reason.
-A manager also registers a return of the car, in case of the car damage creates an bill
+A manager also registers a return of the car, in case of the car damage creates a bill
 for repair through the system.
 
 A system administrator has rights of:

@@ -5,7 +5,6 @@ import net.demo.carsrental.controller.util.UserInputValidator;
 import net.demo.carsrental.dao.exception.NotUniqueException;
 import net.demo.carsrental.dto.AccountRegistrationDTO;
 import net.demo.carsrental.service.AccountService;
-import net.demo.carsrental.service.ServiceHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,7 +13,11 @@ import javax.servlet.http.HttpSession;
 
 public class RegistrationCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger(RegistrationCommand.class);
-    private final AccountService service = (AccountService) ServiceHandler.getAccountService();
+    private final AccountService service;
+
+    public RegistrationCommand(AccountService service) {
+        this.service = service;
+    }
 
     @Override
     public String execute(HttpServletRequest request) {

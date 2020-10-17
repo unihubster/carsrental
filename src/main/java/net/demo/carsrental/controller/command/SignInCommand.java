@@ -7,7 +7,6 @@ import net.demo.carsrental.dao.exception.AccountNotFoundException;
 import net.demo.carsrental.dto.AccountSignInDTO;
 import net.demo.carsrental.model.Account;
 import net.demo.carsrental.service.AccountService;
-import net.demo.carsrental.service.ServiceHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,7 +15,11 @@ import javax.servlet.http.HttpSession;
 
 public class SignInCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger(SignInCommand.class);
-    private final AccountService service = (AccountService) ServiceHandler.getAccountService();
+    private final AccountService service;
+
+    public SignInCommand(AccountService service) {
+        this.service = service;
+    }
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -46,7 +49,8 @@ public class SignInCommand implements Command {
             return CommandConstants.REDIRECT_COMMAND + ViewConstants.SIGN_IN_PAGE;
         }
 
-        return ViewConstants.COMMAND_SERVLET_PATH
+        return CommandConstants.REDIRECT_COMMAND
+                + ViewConstants.COMMAND_SERVLET_PATH
                 + ViewConstants.ACTION_PARAM_GET
                 + CommandConstants.DEFAULT_COMMAND;
     }

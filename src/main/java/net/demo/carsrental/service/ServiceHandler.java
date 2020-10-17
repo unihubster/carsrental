@@ -16,16 +16,16 @@ public class ServiceHandler {
     private ServiceHandler() {
     }
 
-    public static Service getAccountService() {
-        return map.get(ModelNames.ACCOUNT);
+    public static AccountService getAccountService() {
+        return (AccountService) map.get(ModelNames.ACCOUNT);
     }
 
-    public static Service getCarService() {
-        return map.get(ModelNames.CAR);
+    public static CarService getCarService() {
+        return (CarService) map.get(ModelNames.CAR);
     }
 
-    public static Service gerBillService() {
-        return map.get(ModelNames.BILL);
+    public static BillService gerBillService() {
+        return (BillService) map.get(ModelNames.BILL);
     }
 
     public static Service getOrderService() {

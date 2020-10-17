@@ -19,6 +19,7 @@
                             <input type="hidden" name="action" value="register">
                             <c:if test="${not empty sessionScope.registrationError}">
                                 <small class="text-danger"><em><fmt:message key="registration.message.error.validation"/></em></small>
+                                ${sessionScope.remove("registrationError")}
                             </c:if>
                             <c:if test="${not empty sessionScope.userExist}">
                                 <small class="text-danger"><em><fmt:message key="registration.message.error.userExist"/></em></small>

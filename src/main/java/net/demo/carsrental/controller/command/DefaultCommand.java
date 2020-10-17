@@ -10,19 +10,25 @@ public class DefaultCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         Account.Role role = (Account.Role) request.getSession().getAttribute(ViewConstants.ROLE);
-        return CommandConstants.REDIRECT_COMMAND + getDefaultPageNameForRole(role);
+        return getDefaultPageNameForRole(role);
     }
 
     private String getDefaultPageNameForRole(Account.Role role) {
         switch (role) {
             case ADMIN:
-                return ViewConstants.DEFAULT_ADMIN_PAGE;
+                return ViewConstants.COMMAND_SERVLET_PATH
+                        + ViewConstants.ACTION_PARAM_GET
+                        + CommandConstants.DEFAULT_ADMIN_PAGE_COMMAND;
             case MANAGER:
-                return ViewConstants.DEFAULT_MANAGER_PAGE;
+                return ViewConstants.COMMAND_SERVLET_PATH
+                        + ViewConstants.ACTION_PARAM_GET
+                        + CommandConstants.DEFAULT_MANAGER_PAGE_COMMAND;
             case CUSTOMER:
-                return ViewConstants.DEFAULT_CUSTOMER_PAGE;
+                return ViewConstants.COMMAND_SERVLET_PATH
+                        + ViewConstants.ACTION_PARAM_GET
+                        + CommandConstants.DEFAULT_CUSTOMER_PAGE_COMMAND;
             default:
-                return ViewConstants.DEFAULT_PAGE;
+                return CommandConstants.REDIRECT_COMMAND + ViewConstants.DEFAULT_PAGE;
         }
     }
 }

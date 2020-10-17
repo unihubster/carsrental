@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 
 /**
  * Filter for Command servlet actions
@@ -37,6 +38,7 @@ public class AccessServletCommandFilter implements Filter {
         if (!isAllowedCommandAccess(commandName, roleFromSession)) {
             LOGGER.info("Access denied for path '{}' and command '{}' for role '{}' for username '{}'",
                     path, commandName, roleFromSession, session.getAttribute(ViewConstants.USER_NAME));
+            httpServletResponse.setStatus(HttpURLConnection.HTTP_FORBIDDEN);
             httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + ViewConstants.ACCESS_DENIED_PAGE);
             return;
         }

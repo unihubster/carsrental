@@ -18,6 +18,7 @@
                             <input type="hidden" name="action" value="sign_in">
                             <c:if test="${not empty sessionScope.registrationError}">
                                 <small class="text-danger"><em><fmt:message key="registration.message.error.validation"/></em></small>
+                                ${sessionScope.remove("registrationError")}
                             </c:if>
                             <div class="form-group">
                                 <label class="font-weight-bold"><fmt:message key="registration.label.username"/></label>
