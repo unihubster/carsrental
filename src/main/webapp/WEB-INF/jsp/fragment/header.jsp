@@ -14,7 +14,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/command?action=default"><fmt:message key="nav.home"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/gateway/default"><fmt:message key="nav.home"/></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/cars-list.jsp"><fmt:message key="nav.cars.list"/></a>
@@ -59,11 +59,10 @@
             --%>
             <div>&nbsp;</div>
             <c:if test="${empty sessionScope.username}">
-                <a class="btn btn-primary px-4" href="${pageContext.request.contextPath}/login.jsp"><fmt:message key="nav.login"/></a>
+                <a class="btn btn-primary px-4" href="${pageContext.request.contextPath}/gateway/login.page"><fmt:message key="nav.login"/></a>
             </c:if>
             <c:if test="${not empty sessionScope.username}">
-                <form class="form-inline" method="post" action="${pageContext.request.contextPath}/command">
-                    <input type="hidden" name="action" value="sign_out">
+                <form class="form-inline" method="post" action="${pageContext.request.contextPath}/gateway/sign_out">
                     <input type="submit" name="submit" class="btn btn-primary px-4" value="<fmt:message key="nav.logout"/>">
                 </form>
             </c:if>

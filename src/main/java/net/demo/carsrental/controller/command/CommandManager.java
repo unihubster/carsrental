@@ -32,9 +32,19 @@ public class CommandManager {
     }
 
     public Command getCommand(HttpServletRequest request) {
-        String commandName = request.getParameter(ViewConstants.ACTION_PARAM);
+        String commandName = getCommandName(request);
         LOGGER.debug("Request command name = {}", commandName);
         return commandsMap.getOrDefault(commandName, getDefaultCommand());
+    }
+
+    public String getCommandName(HttpServletRequest request) {
+        String commandName = request.getParameter(ViewConstants.ACTION_PARAM);
+        if (commandName != null) {
+            return commandName;
+        }
+        String requestURI = request.getRequestURI();
+        return requestURI.substring(requestURI.lastIndexOf(ViewConstants.COMMAND_SERVLET_PATH) + ViewConstants.COMMAND_SERVLET_PATH
+                .length());
     }
 
     private Command getDefaultCommand() {
@@ -48,6 +58,8 @@ public class CommandManager {
         registerCommand(Account.Role.MANAGER, CommandConstants.DEFAULT_COMMAND, defaultCommand);
         registerCommand(Account.Role.ADMIN, CommandConstants.DEFAULT_COMMAND, defaultCommand);
 
+        registerCommand(Account.Role.GUEST, CommandConstants.PAGE_REGISTRATION, new PageRegistrationCommand());
+        registerCommand(Account.Role.GUEST, CommandConstants.PAGE_LOGIN, new PageLoginCommand());
         registerCommand(Account.Role.GUEST, CommandConstants.SIGN_IN_COMMAND,
                 new SignInCommand(ServiceHandler.getAccountService()));
         registerCommand(Account.Role.GUEST, CommandConstants.REGISTRATION_COMMAND,

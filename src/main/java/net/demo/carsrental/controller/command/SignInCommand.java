@@ -33,7 +33,7 @@ public class SignInCommand implements Command {
         }
 
         if (ContextUsersHandler.isUserLogged(session.getServletContext(), accountSignInDTO.getUsername())) {
-            LOGGER.info("The user is already signed in. {}", accountSignInDTO);
+            LOGGER.info("The user is already signed in from another place. {}", accountSignInDTO);
             session.setAttribute(ViewConstants.REGISTRATION_ERROR_PARAM, true);
             return CommandConstants.REDIRECT_COMMAND + ViewConstants.SIGN_IN_PAGE;
         }

@@ -17,33 +17,34 @@ import java.net.HttpURLConnection;
 /**
  * Filter for Command servlet actions
  */
-@WebFilter(filterName = "AccessServletCommandFilter", urlPatterns = ViewConstants.COMMAND_SERVLET_PATH)
-public class AccessServletCommandFilter implements Filter {
-    private static final Logger LOGGER = LogManager.getLogger(AccessServletCommandFilter.class);
+@WebFilter(filterName = "AccessGatewayServletFilter",
+        urlPatterns = {ViewConstants.COMMAND_SERVLET_PATH, ViewConstants.COMMAND_SERVLET_PATH + "/*"})
+public class AccessGatewayServletFilter implements Filter {
+    private static final Logger LOGGER = LogManager.getLogger(AccessGatewayServletFilter.class);
+    private static final CommandManager COMMAND_MANAGER = CommandManager.getInstance();
 
     /**
      * Does filter for access to CommandServlet commands
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
 
-        HttpSession session = httpServletRequest.getSession();
-        String path = httpServletRequest.getRequestURL().toString();
+        HttpSession session = req.getSession();
+        String path = req.getRequestURL().toString();
 
         Account.Role roleFromSession = getRoleFromSession(session);
-        String commandName = httpServletRequest.getParameter(ViewConstants.ACTION_PARAM);
+        String commandName = COMMAND_MANAGER.getCommandName(req);
 
-        if (!isAllowedCommandAccess(commandName, roleFromSession)) {
-            LOGGER.info("Access denied for path '{}' and command '{}' for role '{}' for username '{}'",
+        if (isAllowedCommandAccess(commandName, roleFromSession)) {
+            filterChain.doFilter(req, res);
+        } else {
+            LOGGER.info("Access denied for path '{}' and command '{}' for role '{}' and username '{}'",
                     path, commandName, roleFromSession, session.getAttribute(ViewConstants.USER_NAME));
-            httpServletResponse.setStatus(HttpURLConnection.HTTP_FORBIDDEN);
-            httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + ViewConstants.ACCESS_DENIED_PAGE);
-            return;
+            res.setStatus(HttpURLConnection.HTTP_FORBIDDEN);
+            res.sendRedirect(req.getContextPath() + ViewConstants.ACCESS_DENIED_PAGE);
         }
-
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
     private Account.Role getRoleFromSession(HttpSession session) {
@@ -51,8 +52,8 @@ public class AccessServletCommandFilter implements Filter {
     }
 
     private boolean isAllowedCommandAccess(String commandName, Account.Role role) {
-        return CommandManager.getInstance()
-                             .getCommandNameSet(role)
-                             .contains(commandName);
+        return COMMAND_MANAGER
+                .getCommandNameSet(role)
+                .contains(commandName);
     }
 }

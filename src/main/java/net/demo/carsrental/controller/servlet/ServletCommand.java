@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet({ViewConstants.COMMAND_SERVLET_PATH})
+@WebServlet({ViewConstants.COMMAND_SERVLET_PATH, ViewConstants.COMMAND_SERVLET_PATH + "/*"})
 public class ServletCommand extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(ServletCommand.class);
 
@@ -36,7 +36,7 @@ public class ServletCommand extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOGGER.trace("Request {}", req.getRequestURI());
+        LOGGER.debug("Request uri is {}", req.getRequestURI());
         Command command = CommandManager.getInstance().getCommand(req);
         String page = command.execute(req);
         if (page.contains(CommandConstants.REDIRECT_COMMAND)) {

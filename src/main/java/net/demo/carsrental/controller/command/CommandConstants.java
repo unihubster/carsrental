@@ -4,16 +4,17 @@ package net.demo.carsrental.controller.command;
 public class CommandConstants {
     public static final String REDIRECT_COMMAND = "redirect:";
 
-    protected static final String DEFAULT_COMMAND = "default";
-    protected static final String REGISTRATION_COMMAND = "register";
-    protected static final String SIGN_IN_COMMAND = "sign_in";
-    protected static final String SIGN_OUT_COMMAND = "sign_out";
+    protected static final String DEFAULT_COMMAND = "/default";
+    protected static final String DEFAULT_ADMIN_PAGE_COMMAND = "/admin-home";
+    protected static final String DEFAULT_MANAGER_PAGE_COMMAND = "/manager-home";
+    protected static final String DEFAULT_CUSTOMER_PAGE_COMMAND = "/customer-home";
+    protected static final String REGISTRATION_COMMAND = "/register";
+    protected static final String SIGN_IN_COMMAND = "/sign_in";
+    protected static final String SIGN_OUT_COMMAND = "/sign_out";
+    protected static final String RENTAL_CARS_LIST = "/cars-list";
 
-    protected static final String DEFAULT_ADMIN_PAGE_COMMAND = "admin-home";
-    protected static final String DEFAULT_MANAGER_PAGE_COMMAND = "manager-home";
-    protected static final String DEFAULT_CUSTOMER_PAGE_COMMAND = "customer-home";
-
-    protected static final String RENTAL_CARS_LIST = "cars-list";
+    protected static final String PAGE_REGISTRATION = "/registration.page";
+    protected static final String PAGE_LOGIN = "/login.page";
 
     private CommandConstants() {
     }

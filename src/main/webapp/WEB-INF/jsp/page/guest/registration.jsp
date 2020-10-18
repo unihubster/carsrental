@@ -14,9 +14,8 @@
                 <div class="card-header text-center"><fmt:message key="registration.label"/></div>
                 <div class="card-body">
                     <div class="col-sm-12">
-                        <form method="post" action="${pageContext.request.contextPath}/command" id="singnupForm" onSubmit="return validation();"
+                        <form method="post" action="${pageContext.request.contextPath}/gateway/register" id="singnupForm" onSubmit="return validation();"
                               class="needs-validation" novalidate>
-                            <input type="hidden" name="action" value="register">
                             <c:if test="${not empty sessionScope.registrationError}">
                                 <small class="text-danger"><em><fmt:message key="registration.message.error.validation"/></em></small>
                                 ${sessionScope.remove("registrationError")}

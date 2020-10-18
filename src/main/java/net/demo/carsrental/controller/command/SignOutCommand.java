@@ -19,7 +19,6 @@ public class SignOutCommand implements Command {
         session.setAttribute(ViewConstants.ROLE, Account.Role.GUEST);
 
         return ViewConstants.COMMAND_SERVLET_PATH
-                + ViewConstants.ACTION_PARAM_GET
                 + CommandConstants.DEFAULT_COMMAND;
     }
 }

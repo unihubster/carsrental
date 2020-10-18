@@ -12,7 +12,11 @@
         <div class="row">
             <div class="col-lg-3"></div>
             <div class="col-lg-6">
-                <h3><fmt:message key="access.error.message"/>&nbsp;<a href="login.jsp"><fmt:message key="nav.login"/></a></h3>
+                <h3><fmt:message key="access.error.message"/></h3>
+                <c:if test="${empty sessionScope.username}">
+                    <h4><fmt:message key="access.error.message.guest"/>&nbsp;<a href="${pageContext.request.contextPath}/gateway/login.page"><fmt:message
+                            key="nav.login"/></a></h4>
+                </c:if>
             </div>
             <div class="col-lg-3"></div>
         </div>

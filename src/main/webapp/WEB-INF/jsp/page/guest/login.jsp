@@ -13,9 +13,8 @@
             <div class="card col-md-6 shadow rounded pt-2">
                 <div class="card-body">
                     <div class="col-sm-12">
-                        <form action="${pageContext.request.contextPath}/command" method="post" id="singninForm" onSubmit="return validation();"
+                        <form action="${pageContext.request.contextPath}/gateway/sign_in" method="post" id="singninForm" onSubmit="return validation();"
                               class="needs-validation" novalidate>
-                            <input type="hidden" name="action" value="sign_in">
                             <c:if test="${not empty sessionScope.registrationError}">
                                 <small class="text-danger"><em><fmt:message key="registration.message.error.validation"/></em></small>
                                 ${sessionScope.remove("registrationError")}
@@ -35,8 +34,9 @@
                             </div>
                             <!--/.next-form-->
                         </form>
-                        <div class="text-info"><fmt:message key="login.registration.message"/>&nbsp;<a href="registration.jsp"><fmt:message
-                                key="login.registration.label"/></a></div>
+                        <div class="text-info"><fmt:message key="login.registration.message"/>&nbsp;<a
+                                href="${pageContext.request.contextPath}/gateway/registration.page"><fmt:message key="login.registration.label"/></a>
+                        </div>
                     </div>
                 </div>
             </div>
